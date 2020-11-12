@@ -1,4 +1,4 @@
-package com.styl.materialmessenger
+package com.styl.materialmessenger.modules
 
 import android.view.ViewGroup
 import android.view.WindowManager

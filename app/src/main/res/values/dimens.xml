@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <dimen name="text_12">12sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_xsmall">16sp</dimen>
+    <dimen name="text_size_xxsmall">18sp</dimen>
+    <dimen name="text_size_normal">22sp</dimen>
+    <dimen name="text_size_medium">26sp</dimen>
+    <dimen name="text_size_xmedium">36sp</dimen>
+    <dimen name="text_size_large">39sp</dimen>
+    <dimen name="text_size_xlarge">46sp</dimen>
+    <dimen name="text_size_xxlarge">55sp</dimen>
+
     <dimen name="padding_main">20dp</dimen>
+
+    <dimen name="dialog_width">308dp</dimen>
+    <dimen name="dialog_height">196dp</dimen>
 </resources>

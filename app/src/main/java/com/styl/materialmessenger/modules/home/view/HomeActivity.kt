@@ -2,7 +2,7 @@ package com.styl.materialmessenger.modules.home.view
 
 import android.os.Bundle
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
-import com.styl.materialmessenger.BaseActivity
+import com.styl.materialmessenger.modules.BaseActivity
 import com.styl.materialmessenger.R
 import com.styl.materialmessenger.modules.home.HomeContract
 import com.styl.materialmessenger.modules.home.presenter.HomePresenter

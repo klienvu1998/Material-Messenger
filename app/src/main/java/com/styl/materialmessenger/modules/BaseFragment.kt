@@ -1,13 +1,20 @@
 package com.styl.materialmessenger.modules
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.styl.materialmessenger.modules.loading.LoadingFragment
 
 abstract class BaseFragment: Fragment() {
+
+    var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    var databaseReference: DatabaseReference? = null
     private var loadingFragment: LoadingFragment? = null
     var v: View? = null
 
@@ -42,6 +49,14 @@ abstract class BaseFragment: Fragment() {
         }
 
         return v
+    }
+
+    fun showToast(msg: String) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    fun showLog(name: String, msg: String) {
+        Log.d(name, msg)
     }
 
     abstract fun initializeView(savedInstanceState: Bundle?)

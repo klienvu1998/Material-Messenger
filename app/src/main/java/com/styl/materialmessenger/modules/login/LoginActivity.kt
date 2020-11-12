@@ -2,8 +2,9 @@ package com.styl.materialmessenger.modules.login
 
 import android.os.Bundle
 import android.view.View
-import com.styl.materialmessenger.BaseActivity
+import com.styl.materialmessenger.modules.BaseActivity
 import com.styl.materialmessenger.R
+import com.styl.materialmessenger.modules.login.view.LoginFragment
 
 class LoginActivity: BaseActivity(), View.OnClickListener {
 
@@ -13,7 +14,8 @@ class LoginActivity: BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        loginFragment = LoginFragment()
+        loginFragment =
+            LoginFragment()
         supportFragmentManager.beginTransaction().replace(R.id.loginContainer, loginFragment).commit()
     }
 

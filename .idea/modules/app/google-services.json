@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "774387442589",
+    "firebase_url": "https://material-messenger-f0122.firebaseio.com",
+    "project_id": "material-messenger-f0122",
+    "storage_bucket": "material-messenger-f0122.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774387442589:android:e2777cf3c1aea10f2e0574",
+        "android_client_info": {
+          "package_name": "com.styl.materialmessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "774387442589-ou8o2l1btde53bgko1nvgjjeuddmkmbt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.styl.materialmessenger",
+            "certificate_hash": "06b61c8b9df61b8105b43b80389a8f6001a75ce8"
+          }
+        },
+        {
+          "client_id": "774387442589-nlv729teqaoq197r542aq1evh2avd55l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4WMydVFHWNr9X_KBpd4a5dp51G0S9sgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "774387442589-nlv729teqaoq197r542aq1evh2avd55l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
