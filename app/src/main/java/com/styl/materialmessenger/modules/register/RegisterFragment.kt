@@ -47,8 +47,8 @@ class RegisterFragment: BaseFragment(), View.OnClickListener {
 
                                 val hashMap: HashMap<String,String> = HashMap()
                                 userId?.let { hashMap.put("id", it) }
-                                hashMap["username"] = userName
-                                hashMap["phonenumber"] = phoneNumber
+                                hashMap["userName"] = userName
+                                hashMap["phoneNumber"] = phoneNumber
 
                                 databaseReference?.setValue(hashMap)?.addOnCompleteListener {
                                     if (it.isSuccessful) {

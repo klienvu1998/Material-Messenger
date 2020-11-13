@@ -6,12 +6,18 @@ import android.os.Handler
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.styl.materialmessenger.modules.home.view.HomeActivity
 import com.styl.materialmessenger.R
 import com.styl.materialmessenger.modules.BaseFragment
+import com.styl.materialmessenger.modules.dialog.MessageDialogFragment
+import com.styl.materialmessenger.modules.loading.LoadingFragment
+import com.styl.materialmessenger.modules.login.LoginActivity
 import com.styl.materialmessenger.modules.login.LoginContract
 import com.styl.materialmessenger.modules.login.presenter.LoginPresenter
 import com.styl.materialmessenger.utils.GeneralUtils
@@ -40,7 +46,7 @@ class LoginFragment: BaseFragment(), View.OnClickListener, LoginContract.View {
 
         v?.findViewById<TextView>(R.id.btnLogin)?.setOnClickListener(this)
         v?.findViewById<TextView>(R.id.btnSignUp)?.setOnClickListener(this)
-        v?.findViewById<ConstraintLayout>(R.id.loginParentView)?.setOnClickListener(this)
+        v?.findViewById<LinearLayout>(R.id.loginParentView)?.setOnClickListener(this)
     }
 
     override fun getLayoutResource(): Int {
@@ -81,9 +87,26 @@ class LoginFragment: BaseFragment(), View.OnClickListener, LoginContract.View {
                         activity?.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                         activity?.finish()
                     } else {
-                        showToast("Your email not verification !!")
+                        dismissLoading()
+                        val dialogFragment = MessageDialogFragment.newInstance("Verification Email", "An email is send to your email for verification")
+                        firebaseAuth.currentUser?.sendEmailVerification()
+                        (context as LoginActivity).supportFragmentManager.beginTransaction()
+                            .add(dialogFragment as Fragment, LoadingFragment::class.java.simpleName)
+                            .commitAllowingStateLoss()
+                        dialogFragment.listener = object: MessageDialogFragment.MessageDialogListener {
+                            override fun onNegativeClickListener(dialogFragment: DialogFragment) {
+                            }
+
+                            override fun onPositiveClickListener(dialogFragment: DialogFragment) {
+                            }
+
+                            override fun onNeutralClickListener(dialogFragment: DialogFragment) {
+                                (context as LoginActivity).supportFragmentManager.popBackStack()
+                            }
+                        }
                     }
                 } else {
+                    dismissLoading()
                     showToast("Wrong email or password !!")
                 }
             }

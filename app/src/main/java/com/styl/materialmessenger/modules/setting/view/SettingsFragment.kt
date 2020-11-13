@@ -1,5 +1,6 @@
 package com.styl.materialmessenger.modules.setting.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import com.styl.materialmessenger.entities.SettingEntity
 import com.styl.materialmessenger.modules.BaseFragment
 import com.styl.materialmessenger.modules.dialog.MessageDialogFragment
 import com.styl.materialmessenger.modules.home.view.HomeActivity
+import com.styl.materialmessenger.modules.login.LoginActivity
 
 class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener {
 
@@ -40,6 +42,10 @@ class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener {
 
                     override fun onPositiveClickListener(dialogFragment: DialogFragment) {
                         firebaseAuth.signOut()
+                        val intent = Intent(context, LoginActivity::class.java)
+                        startActivity(intent)
+                        activity?.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        activity?.finish()
                     }
 
                     override fun onNeutralClickListener(dialogFragment: DialogFragment) {

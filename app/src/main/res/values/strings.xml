@@ -8,4 +8,6 @@
     <string name="phone_number">Phone Number</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
+    <string name="name">Name</string>
+    <string name="people">People</string>
 </resources>

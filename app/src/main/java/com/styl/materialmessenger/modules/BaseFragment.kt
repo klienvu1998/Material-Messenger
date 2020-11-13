@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.styl.materialmessenger.modules.loading.LoadingFragment
 
@@ -15,6 +16,7 @@ abstract class BaseFragment: Fragment() {
 
     var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     var databaseReference: DatabaseReference? = null
+    val firebaseUser = FirebaseAuth.getInstance().currentUser
     private var loadingFragment: LoadingFragment? = null
     var v: View? = null
 
