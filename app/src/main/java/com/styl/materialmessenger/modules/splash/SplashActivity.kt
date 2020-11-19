@@ -4,15 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.styl.materialmessenger.modules.BaseActivity
 import com.styl.materialmessenger.R
 import com.styl.materialmessenger.modules.home.view.HomeActivity
 import com.styl.materialmessenger.modules.login.LoginActivity
 
 class SplashActivity: BaseActivity() {
-
-    var firebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

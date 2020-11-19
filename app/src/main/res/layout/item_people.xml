@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:paddingVertical="10dp"
+    android:id="@+id/peopleItemContainer"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 

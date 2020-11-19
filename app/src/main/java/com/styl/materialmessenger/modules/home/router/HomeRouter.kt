@@ -2,7 +2,7 @@ package com.styl.materialmessenger.modules.home.router
 
 import android.content.Context
 import com.styl.materialmessenger.R
-import com.styl.materialmessenger.modules.chat.view.ChatFragment
+import com.styl.materialmessenger.modules.chathome.view.ChatFragment
 import com.styl.materialmessenger.modules.home.HomeContract
 import com.styl.materialmessenger.modules.home.view.HomeActivity
 import com.styl.materialmessenger.modules.people.view.PeopleFragment

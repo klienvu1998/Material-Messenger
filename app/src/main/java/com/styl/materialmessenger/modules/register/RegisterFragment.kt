@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.styl.materialmessenger.R
 import com.styl.materialmessenger.modules.BaseFragment
@@ -34,7 +33,7 @@ class RegisterFragment: BaseFragment(), View.OnClickListener {
         return R.layout.fragment_register
     }
 
-    private fun registerAccount(userName: String, email: String, password: String, phoneNumber: String) {
+    private fun registerAccount(name: String, email: String, password: String, phoneNumber: String) {
         firebaseAuth?.createUserWithEmailAndPassword(email, password)
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -47,7 +46,7 @@ class RegisterFragment: BaseFragment(), View.OnClickListener {
 
                                 val hashMap: HashMap<String,String> = HashMap()
                                 userId?.let { hashMap.put("id", it) }
-                                hashMap["userName"] = userName
+                                hashMap["name"] = name
                                 hashMap["phoneNumber"] = phoneNumber
 
                                 databaseReference?.setValue(hashMap)?.addOnCompleteListener {

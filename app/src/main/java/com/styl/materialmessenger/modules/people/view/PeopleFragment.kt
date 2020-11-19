@@ -1,6 +1,8 @@
 package com.styl.materialmessenger.modules.people.view
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
@@ -38,6 +40,7 @@ class PeopleFragment: BaseFragment() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
+                v?.findViewById<ProgressBar>(R.id.loadPeople)?.visibility = View.VISIBLE
                 listPeople.clear()
                 for (data in snapshot.children) {
                     val peopleEntity = data.getValue(PeopleEntity::class.java)
@@ -47,6 +50,7 @@ class PeopleFragment: BaseFragment() {
                 }
                 adapter = context?.let { PeopleAdapter(it, listPeople) }
                 listViewPeople?.adapter = adapter
+                v?.findViewById<ProgressBar>(R.id.loadPeople)?.visibility = View.GONE
             }
 
         })

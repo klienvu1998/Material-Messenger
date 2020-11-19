@@ -10,4 +10,6 @@
     <string name="btn_no">No</string>
     <string name="name">Name</string>
     <string name="people">People</string>
+    <string name="setting">Settings</string>
+    <string name="input_message">Input message</string>
 </resources>
