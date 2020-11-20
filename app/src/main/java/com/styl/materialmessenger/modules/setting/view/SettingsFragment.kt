@@ -1,7 +1,12 @@
 package com.styl.materialmessenger.modules.setting.view
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
+import android.view.TextureView
+import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +17,9 @@ import com.styl.materialmessenger.modules.BaseFragment
 import com.styl.materialmessenger.modules.dialog.MessageDialogFragment
 import com.styl.materialmessenger.modules.home.view.HomeActivity
 import com.styl.materialmessenger.modules.login.LoginActivity
+import de.hdodenhof.circleimageview.CircleImageView
 
-class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener {
+class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener, View.OnClickListener {
 
     private var settingsAdapter: SettingsAdapter? = null
 
@@ -24,6 +30,7 @@ class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener {
         recyclerView?.layoutManager = layoutManager
         recyclerView?.adapter = settingsAdapter
         settingsAdapter?.setSettingListener(this)
+        v?.findViewById<CircleImageView>(R.id.imgUser).setOnClickListener(this)
     }
 
     override fun getLayoutResource(): Int {
@@ -56,6 +63,40 @@ class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener {
                     dialog.show(fragmentManager, MessageDialogFragment::class.java.simpleName)
                 }
             }
+        }
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0?.id) {
+            R.id.imgUser -> {
+                selectImage()
+            }
+        }
+    }
+
+    private fun selectImage() {
+        val buider = AlertDialog.Builder(activity)
+        val inflater = activity?.layoutInflater
+        val dialogView: View? = inflater?.inflate(R.layout.dialog_change_image, null)
+        buider.setView(v)
+        val dialog = buider.create()
+        if (dialog?.window != null) {
+            dialog.window?.setGravity(Gravity.CENTER)
+        }
+        dialogView?.findViewById<TextView>(R.id.btnCaptureImage)?.setOnClickListener {
+
+        }
+
+        dialogView?.findViewById<TextView>(R.id.btnChooseImageGallery)?.setOnClickListener {
+
+        }
+
+        dialogView?.findViewById<TextView>(R.id.btnClearImage)?.setOnClickListener {
+
+        }
+
+        dialogView?.findViewById<TextView>(R.id.btnCancelChangeImage)?.setOnClickListener {
+            dialog.dismiss()
         }
     }
 }

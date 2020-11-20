@@ -12,6 +12,12 @@
         android:textColor="@color/colorBlurBlue"
         android:text="@string/setting"/>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgUser"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listViewSettings"
         android:layout_width="match_parent"

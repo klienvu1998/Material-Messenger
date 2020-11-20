@@ -12,4 +12,8 @@
     <string name="people">People</string>
     <string name="setting">Settings</string>
     <string name="input_message">Input message</string>
+    <string name="take_an_image">Take an image</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
+    <string name="delete_image">Delete image</string>
+    <string name="cancel">Cancel</string>
 </resources>
