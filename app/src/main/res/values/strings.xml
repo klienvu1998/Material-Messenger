@@ -16,4 +16,8 @@
     <string name="choose_from_gallery">Choose from gallery</string>
     <string name="delete_image">Delete image</string>
     <string name="cancel">Cancel</string>
+    <string name="dont_find_image">Can not find image crop app.</string>
+    <string name="not_support_crop">This device doesn\'t support the crop action!</string>
+    <string name="deny_read_storage">Read External Storage permission denied</string>
+    <string name="deny_camera">Camera permission denied.\n\nPlease change app permissions on phone settings.</string>
 </resources>

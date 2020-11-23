@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="60dp"
     android:gravity="center"
     android:paddingVertical="10dp"
     android:id="@+id/itemSetting"
@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imgIconSetting"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
     <TextView
         android:id="@+id/tvSetting"
@@ -19,7 +19,7 @@
         android:layout_height="80dp"
         android:paddingLeft="20dp"
         android:gravity="center_vertical"
-        android:textSize="@dimen/text_size_medium"
+        android:textSize="@dimen/text_size_xxsmall"
         tools:text="Setting"/>
 
 </LinearLayout>

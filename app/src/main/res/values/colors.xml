@@ -12,4 +12,5 @@
     <color name="colorDarkWhite">#EAEAEA</color>
     <color name="colorBlurBlack">#1A000000</color>
     <color name="colorLightRed">#FF2323</color>
+    <color name="line_gray">#979797</color>
 </resources>
