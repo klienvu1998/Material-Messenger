@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Theme.MyFancyTheme" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:homeAsUpIndicator">@color/colorBlue</item>
+    </style>
+
 </resources>

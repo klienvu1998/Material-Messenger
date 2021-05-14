@@ -1,13 +1,13 @@
-package com.styl.materialmessenger.modules.splash
+package com.styl.materialmessenger.activity.splash
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import com.google.firebase.auth.FirebaseAuth
-import com.styl.materialmessenger.modules.BaseActivity
 import com.styl.materialmessenger.R
-import com.styl.materialmessenger.modules.home.view.HomeActivity
-import com.styl.materialmessenger.modules.login.LoginActivity
+import com.styl.materialmessenger.activity.BaseActivity
+import com.styl.materialmessenger.activity.home.view.HomeActivity
+import com.styl.materialmessenger.activity.login.LoginActivity
 
 class SplashActivity: BaseActivity() {
 
@@ -36,6 +36,6 @@ class SplashActivity: BaseActivity() {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
-        }, 3000L)
+        }, 2000L)
     }
 }

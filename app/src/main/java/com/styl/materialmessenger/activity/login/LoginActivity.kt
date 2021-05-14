@@ -1,8 +1,8 @@
-package com.styl.materialmessenger.modules.login
+package com.styl.materialmessenger.activity.login
 
 import android.os.Bundle
 import android.view.View
-import com.styl.materialmessenger.modules.BaseActivity
+import com.styl.materialmessenger.activity.BaseActivity
 import com.styl.materialmessenger.R
 import com.styl.materialmessenger.modules.login.view.LoginFragment
 

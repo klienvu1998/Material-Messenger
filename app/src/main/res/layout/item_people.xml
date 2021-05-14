@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingVertical="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="10dp"
     android:id="@+id/peopleItemContainer"
     android:gravity="center_vertical"
     android:orientation="horizontal">
@@ -12,6 +13,8 @@
         android:id="@+id/iconPeople"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/colorBlack"
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
@@ -20,7 +23,6 @@
         android:layout_height="50dp"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/text_size_xxsmall"
-        android:textStyle="bold"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/padding_main"
         tools:text="Hy Vu"/>

@@ -1,12 +1,12 @@
 package com.styl.materialmessenger.entities
 
-class PeopleEntity {
+class UserEntity {
 
     var id: String? = ""
     var name: String? = ""
     var email: String? = ""
     var phoneNumber: String? = ""
-    var image: String? = ""
+    var imageUrl: String? = ""
 
     constructor()
 
@@ -15,6 +15,6 @@ class PeopleEntity {
         this.name = name
         this.email = email
         this.phoneNumber = phoneNumber
-        this.image = image
+        this.imageUrl = image
     }
 }

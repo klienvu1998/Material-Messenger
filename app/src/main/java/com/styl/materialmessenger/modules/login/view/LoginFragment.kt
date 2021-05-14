@@ -2,22 +2,19 @@ package com.styl.materialmessenger.modules.login.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.FirebaseAuth
-import com.styl.materialmessenger.modules.home.view.HomeActivity
+import com.styl.materialmessenger.activity.home.view.HomeActivity
 import com.styl.materialmessenger.R
 import com.styl.materialmessenger.modules.BaseFragment
 import com.styl.materialmessenger.modules.dialog.MessageDialogFragment
 import com.styl.materialmessenger.modules.loading.LoadingFragment
-import com.styl.materialmessenger.modules.login.LoginActivity
+import com.styl.materialmessenger.activity.login.LoginActivity
 import com.styl.materialmessenger.modules.login.LoginContract
 import com.styl.materialmessenger.modules.login.presenter.LoginPresenter
 import com.styl.materialmessenger.utils.GeneralUtils

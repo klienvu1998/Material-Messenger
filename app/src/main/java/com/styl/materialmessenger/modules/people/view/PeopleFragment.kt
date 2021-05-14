@@ -11,7 +11,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.styl.materialmessenger.R
 import com.styl.materialmessenger.adapter.PeopleAdapter
-import com.styl.materialmessenger.entities.PeopleEntity
+import com.styl.materialmessenger.entities.UserEntity
 import com.styl.materialmessenger.modules.BaseFragment
 
 class PeopleFragment: BaseFragment() {
@@ -20,7 +20,7 @@ class PeopleFragment: BaseFragment() {
         val TAG = PeopleFragment::class.java.simpleName
     }
 
-    private lateinit var listPeople: ArrayList<PeopleEntity>
+    private lateinit var listPeople: ArrayList<UserEntity>
     private var adapter: PeopleAdapter? = null
 
     override fun initializeView(savedInstanceState: Bundle?) {
@@ -33,17 +33,19 @@ class PeopleFragment: BaseFragment() {
     }
 
     private fun readPeople(listViewPeople: RecyclerView?) {
+        showLoading()
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         databaseReference?.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 showLog(TAG, error.message)
+                dismissLoading()
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 v?.findViewById<ProgressBar>(R.id.loadPeople)?.visibility = View.VISIBLE
                 listPeople.clear()
                 for (data in snapshot.children) {
-                    val peopleEntity = data.getValue(PeopleEntity::class.java)
+                    val peopleEntity = data.getValue(UserEntity::class.java)
                     if (!peopleEntity?.id.equals(firebaseUser?.uid)) {
                         peopleEntity?.let { listPeople.add(it) }
                     }
@@ -51,6 +53,7 @@ class PeopleFragment: BaseFragment() {
                 adapter = context?.let { PeopleAdapter(it, listPeople) }
                 listViewPeople?.adapter = adapter
                 v?.findViewById<ProgressBar>(R.id.loadPeople)?.visibility = View.GONE
+                dismissLoading()
             }
 
         })

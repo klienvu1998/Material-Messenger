@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
@@ -16,22 +17,17 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.styl.materialmessenger.R
 import com.styl.materialmessenger.adapter.SettingsAdapter
-import com.styl.materialmessenger.entities.PeopleEntity
+import com.styl.materialmessenger.entities.UserEntity
 import com.styl.materialmessenger.entities.SettingEntity
 import com.styl.materialmessenger.modules.BaseFragment
 import com.styl.materialmessenger.modules.dialog.MessageDialogFragment
-import com.styl.materialmessenger.modules.home.view.HomeActivity
-import com.styl.materialmessenger.modules.login.LoginActivity
+import com.styl.materialmessenger.activity.home.view.HomeActivity
+import com.styl.materialmessenger.activity.login.LoginActivity
 import com.styl.materialmessenger.utils.ImageProcessor
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.activity_chat_message.*
 import kotlinx.android.synthetic.main.fragment_setting.*
 
 class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener, View.OnClickListener {
@@ -40,12 +36,15 @@ class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener, View.On
         const val PERMISSION_READ_REQUEST_CODE = 1000
         const val RESULT_CHOOSE_IMAGE = 1001
         const val RESULT_TAKE_PHOTO = 1002
+        const val IMAGE_REQUEST = 1003
+        val TAG = SettingsFragment::class.java.simpleName
     }
 
     private var settingsAdapter: SettingsAdapter? = null
     private var outputUri: Uri? = null
 
     override fun initializeView(savedInstanceState: Bundle?) {
+        showLoading()
         settingsAdapter = SettingsAdapter(context)
         val recyclerView = v?.findViewById<RecyclerView>(R.id.listViewSettings)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -61,12 +60,17 @@ class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener, View.On
             firebaseUser?.uid?.let { FirebaseDatabase.getInstance().getReference("Users").child(it) }
         databaseReference?.addValueEventListener(object  : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-
+                dismissLoading()
             }
-
             override fun onDataChange(snapshot: DataSnapshot) {
-                val user = snapshot.getValue(PeopleEntity::class.java)
+                val user = snapshot.getValue(UserEntity::class.java)
                 tvSettingUserName.text = user?.name
+                if (user?.imageUrl.isNullOrEmpty()) {
+                    imgSettingUserAvatar.setImageResource(R.mipmap.ic_launcher_round)
+                } else {
+                    context?.let { Glide.with(it).load(user?.imageUrl).into(imgSettingUserAvatar) }
+                }
+                dismissLoading()
             }
         })
     }
@@ -158,6 +162,11 @@ class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener, View.On
 
         dialogView?.findViewById<TextView>(R.id.btnClearImage)?.setOnClickListener {
             imgSettingUserAvatar.setImageResource(R.mipmap.ic_launcher_round)
+            databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser?.uid!!)
+            val hashUrl: HashMap<String, Any> = HashMap()
+            hashUrl["imageUrl"] = ""
+            databaseReference?.updateChildren(hashUrl)
+            dialog.dismiss()
         }
 
         dialogView?.findViewById<TextView>(R.id.btnCancelChangeImage)?.setOnClickListener {
@@ -167,18 +176,9 @@ class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener, View.On
         dialog.show()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        outputUri = ImageProcessor.requestPermissionsResult(requestCode, grantResults[0], this)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        ImageProcessor.activityImageResult(
+        outputUri = ImageProcessor.activityImageResult(
             resultCode,
             requestCode,
             data,
@@ -186,5 +186,25 @@ class SettingsFragment: BaseFragment(), SettingsAdapter.SettingListener, View.On
             imgSettingUserAvatar,
             outputUri
         )
+        uploadImage()
+    }
+
+    private fun uploadImage() {
+        if (outputUri != null) {
+            storageReference = storageReference?.child("${System.currentTimeMillis()}.jpg")
+            outputUri?.let { storageReference?.putFile(it)?.addOnSuccessListener {
+                Log.d(TAG, "upload success")
+                storageReference?.downloadUrl?.addOnSuccessListener {
+                    Log.d(TAG, "url: $it")
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser?.uid!!)
+                    val hashUrl: HashMap<String, Any> = HashMap()
+                    hashUrl["imageUrl"] = it.toString()
+                    databaseReference?.updateChildren(hashUrl)
+                }
+            }?.addOnFailureListener {
+                Log.d(TAG, "$it")
+            } }
+            outputUri = null
+        }
     }
 }

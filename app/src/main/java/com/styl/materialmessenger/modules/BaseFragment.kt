@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.styl.materialmessenger.modules.loading.LoadingFragment
 
 abstract class BaseFragment: Fragment() {
@@ -18,6 +20,8 @@ abstract class BaseFragment: Fragment() {
     var databaseReference: DatabaseReference? = null
     val firebaseUser = FirebaseAuth.getInstance().currentUser
     private var loadingFragment: LoadingFragment? = null
+    var storageReference: StorageReference? = null
+
     var v: View? = null
 
     override fun onStop() {
@@ -46,7 +50,7 @@ abstract class BaseFragment: Fragment() {
     ): View? {
         if (v == null) {
             v = LayoutInflater.from(activity).inflate(getLayoutResource(), container, false)
-
+            storageReference = FirebaseStorage.getInstance().getReference("uploads")
             initializeView(savedInstanceState)
         }
 

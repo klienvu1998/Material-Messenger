@@ -1,4 +1,4 @@
-package com.styl.materialmessenger.modules.chatmessage
+package com.styl.materialmessenger.modules.chat
 
 import android.os.Bundle
 import android.view.View
@@ -12,11 +12,11 @@ import com.google.firebase.database.ValueEventListener
 import com.styl.materialmessenger.R
 import com.styl.materialmessenger.adapter.MessageAdapter
 import com.styl.materialmessenger.entities.MessageEntity
-import com.styl.materialmessenger.entities.PeopleEntity
-import com.styl.materialmessenger.modules.BaseActivity
-import kotlinx.android.synthetic.main.activity_chat_message.*
+import com.styl.materialmessenger.entities.UserEntity
+import com.styl.materialmessenger.activity.BaseActivity
+import kotlinx.android.synthetic.main.activity_chat.*
 
-class ChatMessageActivity: BaseActivity(), View.OnClickListener {
+class ChatActivity: BaseActivity(), View.OnClickListener {
 
     private var currentChatUserId: String = ""
     private var imgUrlReceiver: String = ""
@@ -25,7 +25,11 @@ class ChatMessageActivity: BaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat_message)
+        setContentView(R.layout.activity_chat)
+
+        currentChatUserId = intent.getStringExtra("userId").toString()
+        imgUrlReceiver = intent.getStringExtra("imageReceiver").toString()
+
         setSupportActionBar(toolbarChatMessage)
         setUpListView()
         supportActionBar?.title = ""
@@ -34,8 +38,6 @@ class ChatMessageActivity: BaseActivity(), View.OnClickListener {
             finish()
         }
         btnSendMessage.setOnClickListener(this)
-        currentChatUserId = intent.getStringExtra("userId").toString()
-        imgUrlReceiver = intent.getStringExtra("imageReceiver").toString()
         firebaseUser = FirebaseAuth.getInstance().currentUser
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(currentChatUserId)
         databaseReference?.addValueEventListener(object  : ValueEventListener {
@@ -44,12 +46,12 @@ class ChatMessageActivity: BaseActivity(), View.OnClickListener {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                val user = snapshot.getValue(PeopleEntity::class.java)
+                val user = snapshot.getValue(UserEntity::class.java)
                 profileNameChatMessage.text = user?.name
-                if (user?.image.isNullOrEmpty()) {
+                if (user?.imageUrl.isNullOrEmpty()) {
                     profileImageChatMessage.setImageResource(R.mipmap.ic_launcher)
                 } else {
-                    Glide.with(this@ChatMessageActivity).load(user?.image).into(profileImageChatMessage)
+                    Glide.with(this@ChatActivity).load(user?.imageUrl).into(profileImageChatMessage)
                 }
                 firebaseUser?.uid?.let { readMessage(it, currentChatUserId) }
             }
@@ -74,6 +76,9 @@ class ChatMessageActivity: BaseActivity(), View.OnClickListener {
                 } else {
                     firebaseUser?.uid?.let { sendMessage(it, currentChatUserId, message) }
                 }
+            }
+            R.id.edtMessage -> {
+                listMessage?.size?.minus(1)?.let { listViewMessage.scrollToPosition(it) }
             }
         }
     }
@@ -105,6 +110,7 @@ class ChatMessageActivity: BaseActivity(), View.OnClickListener {
                     }
                 }
                 messageAdapter?.notifyDataSetChanged()
+                listMessage?.size?.minus(1)?.let { listViewMessage.scrollToPosition(it) }
             }
 
         })

@@ -2,6 +2,8 @@ package com.styl.materialmessenger.utils;
 
 import android.app.Fragment;
 import android.content.ActivityNotFoundException;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -118,7 +122,6 @@ public class ImageProcessor {
                 fragment.startActivityForResult(intent, RESULT_CHOOSE_IMAGE);
 
             } else {
-
                 Toast.makeText(fragment.getActivity(), fragment.getActivity().getResources().getString(R.string.deny_read_storage), Toast.LENGTH_SHORT).show();
 
             }
@@ -154,7 +157,7 @@ public class ImageProcessor {
         }
     }
 
-    private static void startCrop(Intent result, Context context, Uri outputImgUri, androidx.fragment.app.Fragment fragment) {
+    private static Uri startCrop(Intent result, Context context, Uri outputImgUri, androidx.fragment.app.Fragment fragment) {
         String destinationFileName = "SampleCropImage.jpg";
         Uri uri = result != null ? result.getData() : outputImgUri;
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(context.getCacheDir(), destinationFileName)));
@@ -164,6 +167,7 @@ public class ImageProcessor {
         uCrop = advancedConfig(uCrop, context);
 
         uCrop.start(context, fragment);
+        return uri;
     }
 
     private static void startCrop(Context context, File tempFile, androidx.fragment.app.Fragment fragment) {
@@ -194,34 +198,30 @@ public class ImageProcessor {
         return uCrop.withOptions(options);
     }
 
-    public static void handleCropResult(Intent result, androidx.fragment.app.Fragment fragment, ImageView imgAvatar) {
+    public static Uri handleCropResult(Intent result, androidx.fragment.app.Fragment fragment, ImageView imgAvatar) {
         Bitmap bitmap = null;
         try {
             Uri resultUri = UCrop.getOutput(result);
             bitmap = ImageProcessor.getBitmapFromUri(fragment.getActivity(), resultUri);
-
-            if (imgAvatar != null) {
-                imgAvatar.setImageBitmap(bitmap);
-            }
+            return resultUri;
         } catch (IOException ignored) {
         }
+        return null;
     }
 
-    public static boolean activityImageResult(int resultCode, int requestCode, Intent data, final androidx.fragment.app.Fragment fragment, ImageView imgAvatar, Uri outputImgUri) {
+    public static Uri activityImageResult(int resultCode, int requestCode, Intent data, final androidx.fragment.app.Fragment fragment, ImageView imgAvatar, Uri outputImgUri) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case UCrop.REQUEST_CROP:
-                    handleCropResult(data, fragment, imgAvatar);
-                    break;
+                    return handleCropResult(data, fragment, imgAvatar);
                 case RESULT_TAKE_PHOTO:
-                    startCrop(data, fragment.getActivity(), outputImgUri, fragment);
-                    break;
+                    return startCrop(data, fragment.requireActivity(), outputImgUri, fragment);
                 default:
                     checkStartCrop(data, fragment, outputImgUri);
                     break;
             }
         }
-        return true;
+        return null;
     }
 
     private static void checkStartCrop(Intent data, androidx.fragment.app.Fragment fragment, Uri outputImgUri) {
@@ -353,5 +353,11 @@ public class ImageProcessor {
             uri = Uri.fromFile(outputImageFile);
         }
         return uri;
+    }
+
+    public static String getFileExtension(Context context, Uri uri) {
+        ContentResolver contentResolver = context.getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 }

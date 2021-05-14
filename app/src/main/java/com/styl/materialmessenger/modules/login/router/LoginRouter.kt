@@ -2,7 +2,7 @@ package com.styl.materialmessenger.modules.login.router
 
 import android.content.Context
 import com.styl.materialmessenger.R
-import com.styl.materialmessenger.modules.login.LoginActivity
+import com.styl.materialmessenger.activity.login.LoginActivity
 import com.styl.materialmessenger.modules.login.LoginContract
 import com.styl.materialmessenger.modules.register.RegisterFragment
 

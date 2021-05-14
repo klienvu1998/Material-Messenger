@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".modules.chatmessage.ChatMessageActivity">
+    tools:context=".modules.chat.ChatActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -20,8 +20,10 @@
             android:popupTheme="@style/TextAppearance.AppCompat.Menu">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/colorBlack"
                 android:id="@+id/profileImageChatMessage"/>
 
             <TextView
@@ -56,16 +58,19 @@
 
         <ImageView
             android:id="@+id/btnSendMessage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_send"
+            android:layout_marginLeft="10dp"
+            android:layout_alignTop="@id/edtMessage"
+            android:layout_alignBottom="@id/edtMessage"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"/>
 
         <EditText
             android:id="@+id/edtMessage"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:paddingHorizontal="10dp"
             android:layout_centerVertical="true"
             android:hint="@string/input_message"

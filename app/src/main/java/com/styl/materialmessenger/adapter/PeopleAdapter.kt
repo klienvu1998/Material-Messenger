@@ -10,13 +10,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.styl.materialmessenger.R
-import com.styl.materialmessenger.entities.PeopleEntity
-import com.styl.materialmessenger.modules.chatmessage.ChatMessageActivity
+import com.styl.materialmessenger.entities.UserEntity
+import com.styl.materialmessenger.modules.chat.ChatActivity
 import de.hdodenhof.circleimageview.CircleImageView
 
 class PeopleAdapter(
     private val context: Context,
-    private val listPeople: ArrayList<PeopleEntity>
+    private val listPeople: ArrayList<UserEntity>
 ): RecyclerView.Adapter<PeopleAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -36,16 +36,16 @@ class PeopleAdapter(
 
     override fun onBindViewHolder(holder: PeopleAdapter.ViewHolder, position: Int) {
         val currentPeople = listPeople[position]
-        if (currentPeople.image.isNullOrEmpty()) {
+        if (currentPeople.imageUrl.isNullOrEmpty()) {
             holder.image.setImageResource(R.mipmap.ic_launcher)
         } else {
-            Glide.with(context).load(currentPeople.image).into(holder.image)
+            Glide.with(context).load(currentPeople.imageUrl).into(holder.image)
         }
         holder.tvName.text = currentPeople.name
         holder.itemContainer.setOnClickListener {
-            val intent = Intent(context, ChatMessageActivity::class.java)
+            val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra("userId", currentPeople.id)
-            intent.putExtra("imageReceiver", currentPeople.image)
+            intent.putExtra("imageReceiver", currentPeople.imageUrl)
             context.startActivity(intent)
         }
 

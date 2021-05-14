@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".modules.splash.SplashActivity"
+        <activity android:name="com.styl.materialmessenger.activity.splash.SplashActivity"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -23,12 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".modules.home.view.HomeActivity"
+        <activity android:name="com.styl.materialmessenger.activity.home.view.HomeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".modules.login.LoginActivity"
+        <activity android:name=".activity.login.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".modules.chatmessage.ChatMessageActivity"
+        <activity android:name=".modules.chat.ChatActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity

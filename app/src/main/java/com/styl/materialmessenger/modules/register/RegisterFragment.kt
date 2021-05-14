@@ -13,7 +13,7 @@ import com.styl.materialmessenger.R
 import com.styl.materialmessenger.modules.BaseFragment
 import com.styl.materialmessenger.modules.dialog.MessageDialogFragment
 import com.styl.materialmessenger.modules.loading.LoadingFragment
-import com.styl.materialmessenger.modules.login.LoginActivity
+import com.styl.materialmessenger.activity.login.LoginActivity
 import com.styl.materialmessenger.utils.GeneralUtils
 import kotlinx.android.synthetic.main.fragment_register.*
 
